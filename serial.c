@@ -3,8 +3,6 @@
 #include <time.h>
 #include "hardware.h"
 #include "subg_rfspy.h"
-#include "serial.h"
-#include "radio.h"
 #include "statistics.h"
 #include "timer.h"
 
@@ -233,8 +231,6 @@ void serial_flush()
     return;
   }
 
-  RESPONSE_AVAILABLE_SIGNAL_PIN = 1;
-
   // Waiting for tx isr to send the data
   read_timer(&start_time);
   ready_to_send = 1;
@@ -246,8 +242,6 @@ void serial_flush()
   }
 
   output_buffer_read_idx = output_buffer_write_idx = 0;
-
-  RESPONSE_AVAILABLE_SIGNAL_PIN = 0;
 
   // Waiting to finish spi transfer
   while(slave_send_size != 0 && !subg_rfspy_should_exit) {

@@ -20,54 +20,9 @@
 #define BIT6 0x40
 #define BIT7 0x80
 
-#ifdef RILEYLINK
-
-#define HARDWARE_FLOW_CONTROL_CONFIG 0xc0; /* 8N1, hw flow control, high stop bit */
-#define HARDWARE_LED_INIT P0DIR |= BIT0|BIT1|BIT2|BIT3|BIT4|BIT5; // Set P0 0,1,2 as outputs
-#define GREEN_LED_PIN P0_0
-#define BLUE_LED_PIN P0_1
-#define SYSTEM_CLOCK_MHZ 24
-#define RESPONSE_AVAILABLE_SIGNAL_PIN P0_2
-#define DEBUG_PIN1 P0_3
-#define DEBUG_PIN2 P0_4
-#define DEBUG_PIN3 P0_5
-
-#elif EDISON_EXPLORER
-
-#define HARDWARE_FLOW_CONTROL_CONFIG 0xc0; /* 8N1, hw flow control, high stop bit */
-#define HARDWARE_LED_INIT P2DIR |= BIT3|BIT4;
-#define GREEN_LED_PIN P2_3
-#define BLUE_LED_PIN P2_4
-#define SYSTEM_CLOCK_MHZ 24
-
-
-#elif TI_DONGLE
-
 #define HARDWARE_LED_INIT P1DIR |= 2;
-#define GREEN_LED_PIN P1_1
-#define BLUE_LED_PIN P1_1
+#define LED_PIN P1_1
 #define SYSTEM_CLOCK_MHZ 24
-
-#elif SRF_ERF
-
-#define HARDWARE_FLOW_CONTROL_CONFIG 0x02; /* 8N1, NO flow control, high stop bit */
-#define HARDWARE_LED_INIT P1DIR |= BIT7;
-#define GREEN_LED_PIN P1_7
-#define BLUE_LED_PIN P1_7
-#define SYSTEM_CLOCK_MHZ 24
-#elif SRF_STICK
-#define HARDWARE_FLOW_CONTROL_CONFIG 0x02; /* 8N1, NO flow control, high stop bit */
-#define HARDWARE_LED_INIT P1DIR |= BIT7;
-#define GREEN_LED_PIN P1_7
-#define BLUE_LED_PIN P1_6
-#define SYSTEM_CLOCK_MHZ 24
-#elif TI_MINIDEV
-#define HARDWARE_FLOW_CONTROL_CONFIG 0xc0; /* 8N1, hw flow control, high stop bit */
-#define HARDWARE_LED_INIT P1DIR |= BIT0|BIT1;
-#define GREEN_LED_PIN P1_0
-#define BLUE_LED_PIN P1_1
-#define SYSTEM_CLOCK_MHZ 26
-#endif
 
 #define MAX_MODE_REGISTERS 8
 
@@ -81,25 +36,8 @@ typedef struct mode_registers {
   register_setting registers[MAX_MODE_REGISTERS];
 } mode_registers;
 
-typedef enum {
-  GreenLED = 0x00,
-  BlueLED = 0x01
-} LEDNumber;
-
-typedef enum {
-	LEDModeOff = 0x00,
-	LEDModeOn = 0x01,
-	LEDModeDiagnostic = 0x02
-} LEDMode;
-
-typedef enum LEDState {
-	LEDStateOff = 0x00,
-	LEDStateOn = 0x01
-} LEDState;
-
 void init_gpios();
-void led_set_mode(LEDNumber led, LEDMode new_mode);
-void led_set_diagnostic(LEDNumber led, LEDState state);
+void led_set(uint8_t mode);
 
 uint8_t get_register(uint8_t addr);
 uint8_t set_register(uint8_t addr, uint8_t value);

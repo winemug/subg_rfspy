@@ -192,7 +192,7 @@ void cmd_led() {
   uint8_t mode;
   led = serial_rx_byte();
   mode = serial_rx_byte();
-  led_set_mode(led, mode);//0, 1, 2 = Off, On, Auto
+  led_set(mode);
   serial_tx_byte(RESPONSE_CODE_SUCCESS);
   serial_flush();
 }

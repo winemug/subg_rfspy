@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include "hardware.h"
 #include "subg_rfspy.h"
-#include "serial.h"
 #include "commands.h"
 #include "version.h"
 

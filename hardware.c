@@ -2,13 +2,9 @@
 
 #include <stdint.h>
 #include "hardware.h"
-#include "serial.h"
 #include "radio.h"
 #include "timer.h"
 #include "commands.h"
-
-static LEDMode green_mode = 0;
-static LEDMode blue_mode = 0;
 
 mode_registers __xdata tx_registers;
 mode_registers __xdata rx_registers;
@@ -16,50 +12,12 @@ mode_registers __xdata rx_registers;
 void init_gpios() {
 	// init LEDS
 	HARDWARE_LED_INIT;       // see hardware.h
-	GREEN_LED_PIN = 0;
-	BLUE_LED_PIN = 0;
-
-  led_set_mode(GreenLED, LEDModeOff);
-  led_set_mode(BlueLED, LEDModeOff);
-
-	RESPONSE_AVAILABLE_SIGNAL_PIN = 0;
-	DEBUG_PIN1 = 0;
-	DEBUG_PIN2 = 0;
-	DEBUG_PIN3 = 0;
+  led_set(false);
 }
 
-void led_set_mode(LEDNumber led, LEDMode new_mode)
+void led_set(uint8_t mode)
 {
-	if(led == GreenLED){
-		green_mode = new_mode;
-		if(new_mode == LEDModeOn) {
-			GREEN_LED_PIN = LEDStateOn;
-		} else if (new_mode == LEDModeOff) {
-			GREEN_LED_PIN = LEDStateOff;
-		}
-	}
-	else if(led == BlueLED){
-		blue_mode = new_mode;
-		if(new_mode == LEDModeOn) {
-			BLUE_LED_PIN = LEDStateOn;
-		} else if (new_mode == LEDModeOff) {
-			BLUE_LED_PIN = LEDStateOff;
-		}
-	}
-}
-
-void led_set_diagnostic(LEDNumber led, LEDState state)
-{
-	if(led == GreenLED){
-		if(green_mode == LEDModeDiagnostic){
-			GREEN_LED_PIN = state;
-		}
-	}
-	else if(led == BlueLED){
-		if(blue_mode == LEDModeDiagnostic){
-			BLUE_LED_PIN = state;
-		}
-	}
+  LED_PIN = mode;
 }
 
 uint8_t get_register(uint8_t addr) {

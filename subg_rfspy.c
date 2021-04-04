@@ -3,7 +3,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "hardware.h"
-#include "serial.h"
 #include "radio.h"
 #include "timer.h"
 #include "commands.h"
@@ -31,12 +30,9 @@ void subg_rfspy_main() {
   configure_radio();
 
   //LED test
-  GREEN_LED_PIN = 1;
-  delay(100);
-  GREEN_LED_PIN = 0;
-  BLUE_LED_PIN = 1;
-  delay(100);
-  BLUE_LED_PIN = 0;
+  led_set(true);
+  delay(300);
+  led_set(false);
 
   subg_rfspy_init_finished = true;
 
