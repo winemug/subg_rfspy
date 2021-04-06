@@ -5,8 +5,6 @@
 #include "mock_hardware.h"
 #else
 #include <cc1110.h>  // /usr/share/sdcc/include/mcs51/cc1110.h
-#define U1DBUF_write U1DBUF
-#define U1DBUF_read U1DBUF
 #endif
 
 #include "ioCCxx10_bitdef.h"
@@ -22,7 +20,7 @@
 
 #define HARDWARE_LED_INIT P1DIR |= 2;
 #define LED_PIN P1_1
-#define SYSTEM_CLOCK_MHZ 24
+#define SYSTEM_CLOCK_MHZ 26
 
 #define MAX_MODE_REGISTERS 8
 
