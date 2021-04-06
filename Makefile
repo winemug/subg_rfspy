@@ -23,7 +23,7 @@ CFLAGS+=-I. -I${SERIAL_TYPE} -D${SERIAL_PARAMS}
 
 default: output output/${TARGET_BUILD} output/${TARGET_BUILD}/${TARGET_BUILD}.hex
 
-common_modules = $(main_module) subg_rfspy.rel radio.rel timer.rel encoding.rel manchester.rel \
+common_modules = $(main_module) radio.rel timer.rel encoding.rel manchester.rel \
 	           fourbsixb.rel commands.rel hardware.rel packet_buffer.rel statistics.rel serial.rel
 
 clean:

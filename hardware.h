@@ -8,6 +8,7 @@
 #endif
 
 #include "ioCCxx10_bitdef.h"
+#include <stdint.h>
 
 #define BIT0 0x1
 #define BIT1 0x2
