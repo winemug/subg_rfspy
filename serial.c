@@ -24,11 +24,11 @@ void configure_serial()
 {
 }
 
-void rx0_isr(void) __interrupt URX1_VECTOR
+void rx0_isr(void) __interrupt URX0_VECTOR
 {
 }
 
-void tx0_isr(void) __interrupt UTX1_VECTOR
+void tx0_isr(void) __interrupt UTX0_VECTOR
 {
 }
 
