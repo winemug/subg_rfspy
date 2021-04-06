@@ -32,7 +32,7 @@ clean:
 %.rel: %.c
 	$(CC) $(CFLAGS) -o output/${TARGET_BUILD}/$@ -c $<
 
-output/${TARGET_BUILD}/${TARGET_BUILD}.hex: $(common_modules) $(extra_modules) $(REL) serial.rel
+output/${TARGET_BUILD}/${TARGET_BUILD}.hex: $(common_modules) $(extra_modules) $(REL)
 	cd output/${TARGET_BUILD} && $(CC) $(LDFLAGS) $(CFLAGS) $(common_modules) $(extra_modules) $(REL) -o ${TARGET_BUILD}.hex
 
 install: output/${TARGET_BUILD} output/${TARGET_BUILD}/${TARGET_BUILD}.hex
