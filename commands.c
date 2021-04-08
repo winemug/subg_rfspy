@@ -10,25 +10,11 @@
 #include "statistics.h"
 #include "timer.h"
 
-uint8_t interrupting_cmd = 0;
-
 // If use_pktlen is 0, then a sentinal value of 0 determines end of packet.
 // If use_pktlen is non-zero, then rx will stop at PKTLEN
 uint8_t use_pktlen = 0;
 
 typedef void (*CommandHandler)();
-
-void do_cmd(uint8_t cmd);
-
-void get_command() {
-  uint8_t cmd;
-  cmd = serial_rx_byte();
-  do_cmd(cmd);
-  if (interrupting_cmd) {
-    do_cmd(interrupting_cmd);
-    interrupting_cmd = 0;
-  }
-}
 
 void cmd_set_sw_encoding() {
   EncodingType encoding_type;
@@ -250,14 +236,18 @@ CommandHandler __xdata handlers[] = {
   /* 14 */ cmd_get_statistics
 };
 
-void do_cmd(uint8_t cmd) {
-  if (cmd > 0 && cmd < sizeof(handlers)/sizeof(handlers[0])) {
-    handlers[cmd]();
-  } else {
-    while(serial_rx_avail() > 0) {
-      serial_rx_byte();
+
+void get_command() {
+  uart_get_cmd();
+  if(serial_rx_avail() > 0)
+  {
+    uint8_t cmd = serial_rx_byte();
+    if (cmd > 0 && cmd < sizeof(handlers)/sizeof(handlers[0]))
+      handlers[cmd]();
+    else
+    {
+      serial_tx_byte(RESPONSE_CODE_UNKNOWN_COMMAND);
+      serial_flush();
     }
-    serial_tx_byte(RESPONSE_CODE_UNKNOWN_COMMAND);
-    serial_flush();
   }
 }

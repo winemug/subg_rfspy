@@ -16,14 +16,13 @@ void main(void)
   SLEEP |= SLEEP_OSC_PD;
 
   init_gpios();
-
+  led_set(true);
   // Global interrupt enable
   init_timer();
-
   configure_serial();
   configure_radio();
-
-  //LED test
+  led_set(false);
+  delay(200);
   led_set(true);
   delay(300);
   led_set(false);

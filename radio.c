@@ -360,13 +360,13 @@ uint8_t get_packet_and_write_to_serial(uint8_t channel, uint32_t timeout_ms, uin
     }
 
     // Also going to watch serial in case the client wants to interrupt rx
-    if (SERIAL_DATA_AVAILABLE) {
-      // Received a byte from uart while waiting for radio packet
-      // We will interrupt the RX and go handle the command.
-      interrupting_cmd = serial_rx_byte();
-      rval = RESPONSE_CODE_CMD_INTERRUPTED;
-      break;
-    }
+    // if (SERIAL_DATA_AVAILABLE) {
+    //   // Received a byte from uart while waiting for radio packet
+    //   // We will interrupt the RX and go handle the command.
+    //   interrupting_cmd = serial_rx_byte();
+    //   rval = RESPONSE_CODE_CMD_INTERRUPTED;
+    //   break;
+    // }
   }
 
   RFST = RFST_SIDLE;
